@@ -12,7 +12,7 @@ button, textarea,select,option {
 input[type="checkbox"] {
   width: 20px;
   height: 20px;
-  accent-color: #ea005f;
+  accent-color: #16202A;
 }
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -57,7 +57,7 @@ input:-webkit-autofill {
   background-color: #4e4e55;
 }
 .check-container input:checked ~ .checkmark {
-  background-color: #ea005f;
+  background-color: #16202A;
 }
 .checkmark:after {
   content: "";
@@ -79,8 +79,8 @@ input:-webkit-autofill {
   display: block;
 }
 
-body::-webkit-scrollbar-thumb, .custom-dark-scroll::-webkit-scrollbar-thumb {
-  background-color: #00F;
+body::-webkit-scrollbar-thumb {
+  background-color: #303030;
   border-radius: 1.25rem;
 }
 
@@ -97,5 +97,28 @@ h1 {
 h2 {
   @apply font-semibold text-[2rem] leading-tight;
 }
+h3 {
+  @apply font-medium text-[1.6rem] leading-tight;
+}
+h4 {
+  @apply font-normal text-[1.125rem] leading-tight;
+}
+
+p,label {
+  @apply font-light text-[0.875rem];
+}
 
 /* Fonts - End */
+select__menu-list::-webkit-scrollbar {
+  width: 4px;
+  height: 0px;
+}
+select__menu-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+select__menu-list::-webkit-scrollbar-thumb {
+  background: #888;
+}
+select__menu-list::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
