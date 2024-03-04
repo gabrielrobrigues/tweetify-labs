@@ -15,7 +15,7 @@ export default function HomePage() {
   const themeColors_example = [
     { label: "Azul Marinho", value: "#16202A" },
     { label: "Escuro", value: "#212121" },
-    { label: "Claro", value: "#FFFFFF" },
+    { label: "Claro", value: "#E8F1F2" },
   ];
 
   const fontNames_example = ["Arial", "Poppins", "Times New Roman", "Verdana"];
@@ -24,7 +24,7 @@ export default function HomePage() {
   };
   const handleThemeChange = (selectedOption) => {
     setSelectedTheme(selectedOption.value);
-    setIsLightMode(selectedOption.value === "#FFFFFF");
+    setIsLightMode(selectedOption.value === "#E8F1F2");
   };
 
   const initialText =
