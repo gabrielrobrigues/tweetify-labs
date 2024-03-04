@@ -4,18 +4,17 @@ export default function AddNewButton({ text, marginY, width, height, onClick }) 
   return (
     <button
       style={{
-        width: width ? `${width}px` : "100%",
         marginTop: marginY ? `${marginY}px` : "0",
         marginBottom: marginY ? `${marginY}px` : "0",
       }}
-      className="group transition-all ease-in-out duration-300 hover:-translate-y-[2px] uppercase bg-[#212121] rounded-lg text-black"
+      className="flex items-center group transition-all ease-in-out duration-300 hover:-translate-y-[2px] w-fit h-10 uppercase bg-[#212121] rounded-lg text-black"
       onClick={onClick}
     >
-      <p className="relative flex items-center justify-center font-semibold text-black py-1.5 transition-all ease-in-out duration-300">
+      <div className="flex justify-center items-center w-10 h-10 rounded-lg bg-[#303030]">
+        <span className="text-white text-xl">+</span>
+      </div>
+      <p className="relative flex items-center justify-center font-semibold text-white px-4 pr-6 py-1.5">
         {text}
-        <div className="w-0 transition-all ease-in-out duration-300 group-hover:w-3">
-          <HiArrowRight className="opacity-0 min-w-3 transition-all ease-in-out duration-300 group-hover:opacity-100 group-hover:ml-3" />
-        </div>
       </p>
     </button>
   );

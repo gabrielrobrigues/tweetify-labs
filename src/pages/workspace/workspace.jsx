@@ -69,7 +69,7 @@ export default function WorkspacePage() {
                       <button onClick={handleChangeModelActive} name={model.id} key={model.id} className="flex justify-between items-center w-full gap-x-4 p-4 rounded-[1.5rem] bg-[#212121]">
                         <UniqueModelInput placeholder="Nome do modelo" type='text' name={model.id} onChange={handleChangeModelName} value={model.name} />
                         <div className="flex justify-center items-center rounded-full min-w-7 min-h-7 bg-[#282828]">
-                          <span className="flex items-center justify-center transition-all duration-300 min-w-7 min-h-7 rounded-full bg-[#282828] overflow-hidden">
+                          <span className={`flex items-center justify-center transition-all duration-300 min-w-7 min-h-7 rounded-full overflow-hidden ${model.select ? "bg-[#16202A]" : "bg-[#282828]"}`}>
                             <HiMiniCheck
                               className={`transition-all text-lg ease-in-out duration-300 ${!model.select &&
                                 "opacity-0 translate-y-6"
@@ -79,7 +79,17 @@ export default function WorkspacePage() {
                         </div>
                       </button>
                     ))}
-                  <AddNewButton text="Criar novo modelo" width={200} />
+                    <div className="flex justify-center items-center w-full">
+                  <AddNewButton text="Criar novo modelo" />
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col gap-y-5">
+                <h2>Escolha um tema</h2>
+                <div className="w-full p-6 rounded-[3rem] bg-[#282828]">
+                  <div className="flex flex-col gap-y-5">
+                    hgrytdsdf
                   </div>
                 </div>
               </div>
