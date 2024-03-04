@@ -6,7 +6,7 @@ import WhiteButton from "../../components/Buttons/WhiteButton";
 import FooterSection from "../../components/Footer/FooterSection";
 import { Link } from "react-router-dom";
 
-export default function HomePage() {
+export default function WorkspacePage() {
   const [selectedFont, setSelectedFont] = useState("Poppins");
   const [selectedTheme, setSelectedTheme] = useState("#212121");
   const [isLightMode, setIsLightMode] = useState(false);
@@ -73,15 +73,14 @@ export default function HomePage() {
   return (
     <main className="min-h-screen max-w-screen overflow-x-hidden bg-[#212121]">
       <MainHeader
-      headerType="home"
-      contentTopMargin={96}
+        headerType="workspace"
+        contentTopMargin={76}
         buttonMarginY={20}
-        buttonWidth={320}
-        buttonText="Comece agora"
+        buttonWidth={250}
+        buttonText="Criar novo modelo"
         buttonRedirect="startNowSection"
-        h1Text="Tweetify Labs"
-        h2Text="Economize tempo enquanto aumenta a
-qualidade de seus posts!"
+        h1Text="</Workspace/>"
+        h2Text="Sem predefinições existentes."
       />
       <main className="flex justify-center items-center w-full">
         <main className="flex flex-col w-[1170px]">
@@ -172,7 +171,7 @@ qualidade de seus posts!"
                   </h3>
                   <div className="h-full">
                     <div className="flex items-center justify-center w-full h-full">
-                    <Link to='/workspace'>
+                      <Link to="/workspace">
                         <WhiteButton text="Ir para Workspace" width={240} />
                       </Link>
                     </div>
@@ -180,7 +179,10 @@ qualidade de seus posts!"
                 </div>
               </section>
             </section>
-            <section id="headerRedirect" className="flex flex-col items-center gap-y-10">
+            <section
+              id="headerRedirect"
+              className="flex flex-col items-center gap-y-10"
+            >
               <div className="flex flex-col items-center text-center gap-y-2">
                 <h2>Vamos ao que interessa!</h2>
                 <h3 className="max-w-[760px]">
@@ -189,8 +191,8 @@ qualidade de seus posts!"
                   código aberto no GitHub.
                 </h3>
               </div>
-              <Link to='/workspace'>
-              <WhiteButton text="Ir para Workspace" width={400} height={50} />
+              <Link to="/workspace">
+                <WhiteButton text="Ir para Workspace" width={400} height={50} />
               </Link>
             </section>
           </section>

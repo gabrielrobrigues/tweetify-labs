@@ -91,7 +91,7 @@ body::-webkit-scrollbar {
 
 /* Fonts - Start */
 h1 {
-  @apply uppercase font-extrabold text-[3.75rem];
+  @apply font-extrabold text-[3.75rem];
 }
 
 h2 {
