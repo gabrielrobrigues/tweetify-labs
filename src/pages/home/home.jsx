@@ -152,7 +152,7 @@ qualidade de seus posts!"
                     className={`cursor-pointer rounded-[1.5rem] p-6 h-full ${
                       isScaling
                         ? "scale-[103%]"
-                        : " transition-all ease-in-out duration-300"
+                        : ""
                     }`}
                     style={{ backgroundColor: selectedTheme }}
                   >
