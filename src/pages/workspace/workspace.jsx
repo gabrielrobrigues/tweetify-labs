@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Toastify } from "../../components/Toastify/Toastify";
 import MainHeader from "../../components/Header/MainHeader";
 import MainSelect from "../../components/Selects/MainSelect";
-import WhiteButton from "../../components/Buttons/WhiteButton";
+import AddNewButton from "../../components/Buttons/AddNewButton";
 import FooterSection from "../../components/Footer/FooterSection";
 import { Link } from "react-router-dom";
-import { HiCheck } from "react-icons/hi2";
+import { HiMiniCheck } from "react-icons/hi2";
+import UniqueModelInput from "../../components/Inputs/UniqueModelInput";
 
 export default function WorkspacePage() {
   const [availableModels, setAvailableModels] = useState([]);
@@ -24,6 +25,23 @@ export default function WorkspacePage() {
       },
     ])
   }, [])
+
+  const handleChangeModelName = (e) => {
+    const { name, value } = e.target;
+    setAvailableModels((prevModels) =>
+      prevModels.map((model) =>
+        model.id === parseInt(name) ? { ...model, name: value } : model
+      )
+    );
+  }
+
+  const handleChangeModelActive = (e) => {
+    const { name } = e.target;
+    setAvailableModels((prevModels) =>
+      prevModels.map((model) =>
+        model.id === parseInt(name) ? { ...model, select: true } : { ...model, select: false }
+      ))
+  }
 
   return (
     <main className="min-h-screen max-w-screen overflow-x-hidden bg-[#212121]">
@@ -48,16 +66,21 @@ export default function WorkspacePage() {
                   {/* ModelList */}
                   <div className="flex flex-col gap-y-5">
                     {availableModels.map((model) => (
-                      <button key={model.id} className="flex justify-between w-full p-4 rounded-[1.5rem] bg-[#212121]">
-                        <h3>{model.name}</h3>
-                        <div className="min-w-[20px]">
-                          <HiCheck className="text-[2rem]" />
+                      <button onClick={handleChangeModelActive} name={model.id} key={model.id} className="flex justify-between items-center w-full gap-x-4 p-4 rounded-[1.5rem] bg-[#212121]">
+                        <UniqueModelInput placeholder="Nome do modelo" type='text' name={model.id} onChange={handleChangeModelName} value={model.name} />
+                        <div className="flex justify-center items-center rounded-full min-w-7 min-h-7 bg-[#282828]">
+                          <span className="flex items-center justify-center transition-all duration-300 min-w-7 min-h-7 rounded-full bg-[#282828] overflow-hidden">
+                            <HiMiniCheck
+                              className={`transition-all text-lg ease-in-out duration-300 ${!model.select &&
+                                "opacity-0 translate-y-6"
+                                }`}
+                            />
+                          </span>
                         </div>
                       </button>
                     ))}
+                  <AddNewButton text="Criar novo modelo" width={200} />
                   </div>
-                  {/* Create New Model */}
-                  <WhiteButton text="Criar novo modelo" width={200} height={40} />
                 </div>
               </div>
             </section>
