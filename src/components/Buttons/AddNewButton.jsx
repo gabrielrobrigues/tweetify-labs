@@ -1,5 +1,3 @@
-import { HiArrowRight } from "react-icons/hi2";
-
 export default function AddNewButton({ text, marginY, width, height, onClick }) {
   return (
     <button
@@ -11,7 +9,7 @@ export default function AddNewButton({ text, marginY, width, height, onClick }) 
       onClick={onClick}
     >
       <div className="flex justify-center items-center w-10 h-10 rounded-lg bg-[#303030]">
-        <span className="text-white text-xl">+</span>
+        <span className="text-white text-xl font-semibold">+</span>
       </div>
       <p className="relative flex items-center justify-center font-semibold text-white px-4 pr-6 py-1.5">
         {text}

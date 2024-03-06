@@ -7,6 +7,7 @@ import FooterSection from "../../components/Footer/FooterSection";
 import { Link } from "react-router-dom";
 import { HiMiniCheck } from "react-icons/hi2";
 import UniqueModelInput from "../../components/Inputs/UniqueModelInput";
+import GeneralInput from "../../components/Inputs/GeneralInput";
 
 export default function WorkspacePage() {
   const themeOptions = [
@@ -33,7 +34,17 @@ export default function WorkspacePage() {
     },
   ];
   const [availableModels, setAvailableModels] = useState([]);
-  const [selectedTheme, setSelectedTheme] = useState(themeOptions[0]);
+  const [postInfos, setPostInfos] = useState({
+    user_name: "",
+    user_username: "",
+    user_photo: "",
+    general_fontType: "",
+    general_title_fontSize: "",
+    general_username_fontSize: "",
+    general_text_fontSize: "",
+    general_theme: themeOptions[0],
+  });
+
   useEffect(() => {
     setAvailableModels([
       {
@@ -70,9 +81,17 @@ export default function WorkspacePage() {
   };
 
   const handleChangeThemeActive = (alias) => {
-    setSelectedTheme(themeOptions.find((theme) => theme.alias === alias));
     console.log(themeOptions.find((theme) => theme.alias === alias));
+    setPostInfos((prevInfos) => ({
+      ...prevInfos,
+      general_theme: themeOptions.find((theme) => theme.alias === alias),
+    }));
   };
+
+  const handleChangePostInfos = (e) => {
+    const { name, value } = e.target;
+    setPostInfos((prevInfos) => ({ ...prevInfos, [name]: value }));
+  }
 
   return (
     <main className="min-h-screen max-w-screen overflow-x-hidden bg-[#212121]">
@@ -153,9 +172,23 @@ export default function WorkspacePage() {
                 </div>
               </div>
             </section>
-            // worskpace aq
             <section className="flex flex-col w-full p-12 gap-y-10 bg-[#1E1E1E] rounded-[3rem]">
-              oii
+              {/* Set Infos */}
+              <div className="grid grid-cols-2 gap-x-5">
+                <div className="flex flex-col gap-y-3">
+                  <h2>Informações do Perfil</h2>
+                  <div className="flex w-full">
+                    <GeneralInput
+                      label="Nome de Usuário"
+                      type="text"
+                      name="user_name"
+                      value={postInfos.user_name}
+                      onChange={handleChangePostInfos}
+                      placeholder="User Name"
+                    />
+                  </div>
+                </div>
+              </div>
             </section>
           </section>
         </main>
