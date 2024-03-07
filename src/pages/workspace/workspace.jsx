@@ -111,7 +111,7 @@ export default function WorkspacePage() {
             <section className="grid grid-cols-2 gap-x-10 w-full">
               <div className="flex flex-col gap-y-5">
                 <h2>Seus Modelos</h2>
-                <div className="w-full p-6 rounded-[3rem] bg-[#282828]">
+                <div className="w-full p-6 rounded-[3rem] bg-[#282828] hidden-1-shadow">
                   {/* ModelList */}
                   <div className="flex flex-col gap-y-5">
                     {availableModels.map((model) => (
@@ -119,7 +119,7 @@ export default function WorkspacePage() {
                         onClick={handleChangeModelActive}
                         name={model.id}
                         key={model.id}
-                        className="flex justify-between items-center w-full gap-x-4 p-4 rounded-[1.5rem] bg-[#212121]"
+                        className="flex justify-between items-center w-full gap-x-4 p-4 rounded-[1.5rem] bg-[#212121] hidden-1-shadow"
                       >
                         <UniqueModelInput
                           placeholder="Nome do modelo"
@@ -151,7 +151,7 @@ export default function WorkspacePage() {
               </div>
               <div className="flex flex-col gap-y-5">
                 <h2>Escolha um tema</h2>
-                <div className="w-full p-6 rounded-[3rem] bg-[#282828]">
+                <div className="w-full p-6 rounded-[3rem] bg-[#282828] hidden-1-shadow">
                   <div className="grid grid-cols-8 gap-5">
                     {themeOptions.length > 0 &&
                       themeOptions.map((theme) => (
@@ -159,7 +159,7 @@ export default function WorkspacePage() {
                           name={theme.alias}
                           key={theme.alias}
                           onClick={() => handleChangeThemeActive(theme.alias)}
-                          className="w-12 h-12 rounded-full overflow-hidden"
+                          className="w-12 h-12 rounded-full overflow-hidden hidden-1-shadow"
                           style={{ backgroundColor: theme.secondaryColor }}
                         >
                           <div
@@ -172,7 +172,7 @@ export default function WorkspacePage() {
                 </div>
               </div>
             </section>
-            <section className="flex flex-col w-full p-12 gap-y-10 bg-[#1E1E1E] rounded-[3rem]">
+            <section className="flex flex-col w-full p-12 gap-y-10 bg-[#1E1E1E] rounded-[3rem] hidden-1-shadow">
               {/* Set Infos */}
               <div className="grid grid-cols-2 gap-x-5">
                 <div className="flex flex-col gap-y-3">

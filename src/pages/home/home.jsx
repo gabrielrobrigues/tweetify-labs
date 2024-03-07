@@ -73,8 +73,8 @@ export default function HomePage() {
   return (
     <main className="min-h-screen max-w-screen overflow-x-hidden bg-[#212121]">
       <MainHeader
-      headerType="home"
-      contentTopMargin={96}
+        headerType="home"
+        contentTopMargin={96}
         buttonMarginY={20}
         buttonWidth={320}
         buttonText="Comece agora"
@@ -91,10 +91,10 @@ qualidade de seus posts!"
                 Com poucos segundos, seu post estará pronto para ir aos ares!
               </h2>
               <section className="flex justify-between w-full gap-x-3">
-                <div className="flex flex-col gap-y-4 w-[344px] h-[344px] rounded-[3rem] p-6 to-[#303030] from-[#16202A] bg-gradient-to-br">
+                <div className="flex flex-col gap-y-4 w-[344px] h-[344px] rounded-[3rem] p-6 to-[#303030] from-[#16202A] bg-gradient-to-br hidden-1-shadow">
                   <h3>Adicione as informações do perfil e estilo de post</h3>
                   <div
-                    className="flex gap-x-2 rounded-full pointer-events-none select-none"
+                    className="flex gap-x-2 rounded-full pointer-events-none select-none hidden-1-shadow"
                     style={{ backgroundColor: selectedTheme }}
                   >
                     <img
@@ -142,17 +142,17 @@ qualidade de seus posts!"
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-col gap-y-4 w-[344px] h-[344px] rounded-[3rem] p-6 to-[#303030] from-[#16202A] bg-gradient-to-tl">
+                <div className="flex flex-col gap-y-4 w-[344px] h-[344px] rounded-[3rem] p-6 to-[#303030] from-[#16202A] bg-gradient-to-tl hidden-1-shadow">
                   <h3>
                     Insira páginas e seus conteúdos enquanto pré-visualiza o
                     resultado
                   </h3>
                   <div
                     onClick={handleCardClick}
-                    className={`cursor-pointer rounded-[1.5rem] p-6 h-full ${
+                    className={`cursor-pointer rounded-[1.5rem] p-6 h-full hidden-1-shadow ${
                       isScaling
                         ? "scale-[103%]"
-                        : ""
+                        : "transition-transform duration-300 ease-in-out"
                     }`}
                     style={{ backgroundColor: selectedTheme }}
                   >
@@ -165,14 +165,14 @@ qualidade de seus posts!"
                     </h4>
                   </div>
                 </div>
-                <div className="flex flex-col gap-y-4 w-[344px] h-[344px] rounded-[3rem] p-6 to-[#303030] from-[#16202A] bg-gradient-to-tr">
+                <div className="flex flex-col gap-y-4 w-[344px] h-[344px] rounded-[3rem] p-6 to-[#303030] from-[#16202A] bg-gradient-to-tr hidden-1-shadow">
                   <h3>
                     Baixe o conteúdo e salve as pré-definições para as próximas
                     sessões
                   </h3>
                   <div className="h-full">
                     <div className="flex items-center justify-center w-full h-full">
-                    <Link to='/workspace'>
+                      <Link to="/workspace">
                         <WhiteButton text="Ir para Workspace" width={240} />
                       </Link>
                     </div>
@@ -180,7 +180,10 @@ qualidade de seus posts!"
                 </div>
               </section>
             </section>
-            <section id="headerRedirect" className="flex flex-col items-center gap-y-10">
+            <section
+              id="headerRedirect"
+              className="flex flex-col items-center gap-y-10"
+            >
               <div className="flex flex-col items-center text-center gap-y-2">
                 <h2>Vamos ao que interessa!</h2>
                 <h3 className="max-w-[760px]">
@@ -189,8 +192,8 @@ qualidade de seus posts!"
                   código aberto no GitHub.
                 </h3>
               </div>
-              <Link to='/workspace'>
-              <WhiteButton text="Ir para Workspace" width={400} height={50} />
+              <Link to="/workspace">
+                <WhiteButton text="Ir para Workspace" width={400} height={50} />
               </Link>
             </section>
           </section>

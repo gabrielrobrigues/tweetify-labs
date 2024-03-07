@@ -91,17 +91,17 @@ body::-webkit-scrollbar {
 
 /* Fonts - Start */
 h1 {
-  @apply font-extrabold text-[3.75rem];
+  @apply font-extrabold text-[3.75rem] hidden-1-shadow-text;
 }
 
 h2 {
-  @apply font-semibold text-[2rem] leading-tight;
+  @apply font-semibold text-[2rem] leading-tight hidden-1-shadow-text;
 }
 h3 {
-  @apply font-medium text-[1.6rem] leading-tight;
+  @apply font-medium text-[1.6rem] leading-tight hidden-1-shadow-text;
 }
 h4 {
-  @apply font-normal text-[1.125rem] leading-tight;
+  @apply font-normal text-[1.125rem] leading-tight hidden-1-shadow-text;
 }
 
 p,label {
@@ -121,4 +121,21 @@ select__menu-list::-webkit-scrollbar-thumb {
 }
 select__menu-list::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.hidden-1-shadow {
+  box-shadow: 0 4px 10px 2px rgb(0 0 0 / 15%);
+}
+
+.hidden-1-shadow-text {
+  text-shadow: 0px 2px 15px rgba(0, 0, 0, 30%);
+}
+
+
+.hidden-2-shadow {
+  box-shadow: 0 8px 20px rgb(0 0 0 / 10%);
+}
+
+.hidden-3-shadow {
+  box-shadow: 0 30px 100px rgba(0,0,0,.17);
 }

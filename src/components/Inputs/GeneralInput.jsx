@@ -18,7 +18,7 @@ export default function GeneralInput({
                 name={name}
                 value={value}
                 onChange={onChange}
-                className="flex items-center w-full h-full bg-[#212121] font-normal text-[1rem] rounded-full p-4 py-2"
+                className="hidden-1-shadow flex items-center w-full h-full bg-[#212121] font-normal text-[1rem] rounded-[1rem] p-4 py-2"
                 placeholder={placeholder || ""}
             />
         </div>

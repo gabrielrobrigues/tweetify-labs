@@ -9,7 +9,7 @@ export default function WhiteButton({ text, marginY, width, height, onClick }) {
         marginTop: marginY ? `${marginY}px` : "0",
         marginBottom: marginY ? `${marginY}px` : "0",
       }}
-      className="group transition-all ease-in-out duration-300 hover:-translate-y-[2px] uppercase py-1.5 bg-white rounded-full text-black"
+      className="group transition-all ease-in-out duration-300 hover:-translate-y-[2px] uppercase py-1.5 bg-white rounded-full text-black hidden-1-shadow"
       onClick={onClick}
     >
       <p className="relative flex items-center justify-center font-semibold text-black transition-all ease-in-out duration-300">

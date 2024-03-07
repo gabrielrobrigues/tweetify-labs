@@ -54,16 +54,16 @@ export default function FooterSection() {
               className="w-[80%] flex flex-col gap-y-5"
               onSubmit={handleSubmit}
             >
-              <div className="relative">
+              <div className="relative hidden-1-shadow">
                 <HiOutlineUser className="absolute top-1/2 transform -translate-y-1/2 left-3 text-white/55" />
                 <input
                   name="name"
                   type="text"
                   placeholder="Nome Completo"
-                  className="h-[50px] w-full pl-10 pr-5 bg-[#212121] text-white placeholder:text-whiteD5"
+                  className="h-[50px] w-full pl-10 pr-5 bg-[#212121] text-white placeholder:text-white/55"
                 />
               </div>
-              <div className="relative">
+              <div className="relative hidden-1-shadow">
                 <HiOutlineInbox className="absolute top-1/2 transform -translate-y-1/2 left-3 text-white/55" />
                 <input
                   name="email"
@@ -74,7 +74,7 @@ export default function FooterSection() {
               </div>
               <button
                 type="submit"
-                className="relative w-full h-[50px] bg-[#212121] text-white"
+                className="relative w-full h-[50px] bg-[#212121] text-white hidden-1-shadow"
               >
                 {submittedForm
                   ? "Lorem Ip... digo, formulário enviado."
