@@ -33,15 +33,20 @@ export default function WorkspacePage() {
       darkMode: false,
     },
   ];
+  const fontNames = ["Arial", "Poppins", "Times New Roman", "Verdana"];
+  const fontSizes_username = Array.from({ length: 6 }, (_, i) => i * 2 + 12);
+  const fontSizes_text = Array.from({ length: 6 }, (_, i) => i * 2 + 18);
+  const fontSizes_title = Array.from({ length: 6 }, (_, i) => i * 2 + 24);
+
   const [availableModels, setAvailableModels] = useState([]);
   const [postInfos, setPostInfos] = useState({
     user_name: "",
     user_username: "",
     user_photo: "",
-    general_fontType: "",
-    general_title_fontSize: "",
-    general_username_fontSize: "",
-    general_text_fontSize: "",
+    general_fontType: fontNames[0],
+    general_title_fontSize: 32,
+    general_text_fontSize: 26,
+    general_username_fontSize: 20,
     general_theme: themeOptions[0],
   });
 
@@ -69,6 +74,34 @@ export default function WorkspacePage() {
     );
   };
 
+  const handleFontChange = (selectedOption) => {
+    setPostInfos((prevInfos) => ({
+      ...prevInfos,
+      general_fontType: selectedOption.value,
+    }));
+  };
+
+  const handleTitleFontSizeChange = (selectedOption) => {
+    setPostInfos((prevInfos) => ({
+      ...prevInfos,
+      general_title_fontSize: selectedOption.value,
+    }));
+  };
+
+  const handleTextFontSizeChange = (selectedOption) => {
+    setPostInfos((prevInfos) => ({
+      ...prevInfos,
+      general_text_fontSize: selectedOption.value,
+    }));
+  };
+
+  const handleUsernameFontSizeChange = (selectedOption) => {
+    setPostInfos((prevInfos) => ({
+      ...prevInfos,
+      general_username_fontSize: selectedOption.value,
+    }));
+  };
+
   const handleChangeModelActive = (e) => {
     const { name } = e.target;
     setAvailableModels((prevModels) =>
@@ -91,7 +124,7 @@ export default function WorkspacePage() {
   const handleChangePostInfos = (e) => {
     const { name, value } = e.target;
     setPostInfos((prevInfos) => ({ ...prevInfos, [name]: value }));
-  }
+  };
 
   return (
     <main className="min-h-screen max-w-screen overflow-x-hidden bg-[#212121]">
@@ -108,11 +141,12 @@ export default function WorkspacePage() {
       <main className="flex justify-center items-center w-full">
         <main className="flex flex-col w-[1170px]">
           <section className="flex flex-col gap-y-16 py-16">
+            {/* First Section */}
             <section className="grid grid-cols-2 gap-x-10 w-full">
               <div className="flex flex-col gap-y-5">
+                {/* ModelList */}
                 <h2>Seus Modelos</h2>
                 <div className="w-full p-6 rounded-[3rem] bg-[#282828] hidden-1-shadow">
-                  {/* ModelList */}
                   <div className="flex flex-col gap-y-5">
                     {availableModels.map((model) => (
                       <button
@@ -150,6 +184,7 @@ export default function WorkspacePage() {
                 </div>
               </div>
               <div className="flex flex-col gap-y-5">
+                {/* ChooseTheme */}
                 <h2>Escolha um tema</h2>
                 <div className="w-full p-6 rounded-[3rem] bg-[#282828] hidden-1-shadow">
                   <div className="grid grid-cols-8 gap-5">
@@ -172,23 +207,100 @@ export default function WorkspacePage() {
                 </div>
               </div>
             </section>
+            {/* Second Section */}
             <section className="flex flex-col w-full p-12 gap-y-10 bg-[#1E1E1E] rounded-[3rem] hidden-1-shadow">
-              {/* Set Infos */}
-              <div className="grid grid-cols-2 gap-x-5">
-                <div className="flex flex-col gap-y-3">
+              {/* Set Infos Form */}
+              <div className="grid grid-cols-2 gap-x-10">
+                <div className="flex flex-col gap-y-4">
                   <h2>Informações do Perfil</h2>
-                  <div className="flex w-full">
+                  <div className="grid grid-cols-2 gap-x-5">
                     <GeneralInput
-                      label="Nome de Usuário"
+                      label="Nome do Usuário"
                       type="text"
                       name="user_name"
                       value={postInfos.user_name}
                       onChange={handleChangePostInfos}
                       placeholder="User Name"
                     />
+                    <GeneralInput
+                      label="Foto de perfil do Usuário"
+                      type="text"
+                      name="user_photo"
+                      value={postInfos.user_photo}
+                      onChange={handleChangePostInfos}
+                      placeholder="User Name"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-x-5">
+                    <GeneralInput
+                      label="Username"
+                      type="text"
+                      name="user_username"
+                      value={postInfos.user_username}
+                      onChange={handleChangePostInfos}
+                      placeholder="@username_"
+                    />
+                    <div className="w-full" />
                   </div>
                 </div>
+                <div className="flex flex-col gap-y-4">
+                  <h2>Informações Gerais</h2>
+                  <div className="grid grid-cols-2 gap-x-5">
+                    <div className="w-full flex flex-col gap-y-1">
+                      <p>Fonte:</p>
+                      <MainSelect
+                        options={fontNames.map((font) => ({
+                          value: font,
+                          label: font,
+                        }))}
+                        value={postInfos.general_fontType}
+                        onChange={handleFontChange}
+                      />
+                    </div>
+                    <div className="w-full flex flex-col gap-y-1">
+                      <p>Tamanho da fonte: (Título)</p>
+                      <MainSelect
+                        options={fontSizes_title.map((font) => ({
+                          value: font,
+                          label: font,
+                        }))}
+                        value={postInfos.general_title_fontSize}
+                        onChange={handleTitleFontSizeChange}
+                      />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-x-5">
+                    <div className="w-full flex flex-col gap-y-1">
+                      <p>Tamanho da fonte: (Username)</p>
+                      <MainSelect
+                        options={fontSizes_username.map((font) => ({
+                          value: font,
+                          label: font,
+                        }))}
+                        value={postInfos.general_username_fontSize}
+                        onChange={handleUsernameFontSizeChange}
+                      />
+                    </div>
+                    <div className="w-full flex flex-col gap-y-1">
+                      <p>Tamanho da fonte: (Texto)</p>
+                      <MainSelect
+                        options={fontSizes_text.map((font) => ({
+                          value: font,
+                          label: font,
+                        }))}
+                        value={postInfos.general_text_fontSize}
+                        onChange={handleTextFontSizeChange}
+                      />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-x-5"></div>
+                </div>
               </div>
+
+              <div className="w-full h-1/2 bg-[#303030]" />
+
+              {/* List Pages */}
+              <div className="flex flex-col gap-y-5"></div>
             </section>
           </section>
         </main>
