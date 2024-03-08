@@ -54,7 +54,8 @@ export default function WorkspacePage() {
       {
         id: 0,
         type: tweetsType[0].value,
-        title: "",
+        title: `Resumo Tech de hoje
+        27/02/2024`,
         theme: "",
         content: "",
         images: [
@@ -65,9 +66,9 @@ export default function WorkspacePage() {
         ],
       },
     ],
-    user_name: "",
-    user_username: "",
-    user_photo: "",
+    user_name: "Thiago Lima",
+    user_username: "@thiagolima.tech",
+    user_photo: "/temp.jpg",
     general_fontType: fontNames[0],
     general_title_fontSize: 32,
     general_text_fontSize: 26,
@@ -344,6 +345,7 @@ export default function WorkspacePage() {
 
               {/* List Pages */}
               <PageList
+                postInfos={postInfos}
                 pagesContent={postInfos.pagesContent}
                 tweetsType={tweetsType}
                 setPostInfos={setPostInfos}

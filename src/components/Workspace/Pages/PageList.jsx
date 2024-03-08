@@ -3,10 +3,12 @@ import React from "react";
 import GeneralTextArea from "../../Inputs/GeneralTextArea";
 import MainSelect from "../../Selects/MainSelect";
 import ImageUploadInput from "../../Inputs/ImageUploadInput";
-import { HiMiniXMark } from "react-icons/hi2";
+import { HiArrowDownTray, HiMiniXMark } from "react-icons/hi2";
+import PostObject from "./PostObject";
+import AddNewButton from "../../Buttons/AddNewButton"
 
 const PageList = ({
-  pagesContent,
+  postInfos,
   tweetsType,
   setPostInfos,
   handlePostImagesChange,
@@ -14,7 +16,7 @@ const PageList = ({
 }) => {
   return (
     <div className="flex flex-col gap-y-5">
-      {pagesContent.map((page, index) => (
+      {postInfos.pagesContent.map((page, index) => (
         <div key={index} className="flex flex-col gap-y-10">
           <div className="grid grid-cols-[2fr_1.5fr] gap-x-5">
             <div className="w-full flex flex-col gap-y-5">
@@ -124,7 +126,15 @@ const PageList = ({
                     </div>
                   )}
                 </>
-              )}{" "}
+              )}
+            </div>
+            <div className="flex flex-col gap-y-5 justify-center items-center">
+              <PostObject index={index} postInfos={postInfos} />
+              <AddNewButton
+                icon={<HiArrowDownTray className="text-base" />}
+                onClick={() => console.log("baixou :D")}
+                text="Download"
+              />
             </div>
           </div>
           <div className="w-full h-[2px] bg-[#303030]" />

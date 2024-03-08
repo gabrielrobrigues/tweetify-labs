@@ -94,7 +94,7 @@ qualidade de seus posts!"
                 <div className="flex flex-col gap-y-4 w-[344px] h-[344px] rounded-[3rem] p-6 to-[#303030] from-[#16202A] bg-gradient-to-br hidden-1-shadow">
                   <h3>Adicione as informações do perfil e estilo de post</h3>
                   <div
-                    className="flex gap-x-2 rounded-full pointer-events-none select-none hidden-1-shadow"
+                    className="flex gap-x-1 rounded-full pointer-events-none select-none hidden-1-shadow"
                     style={{ backgroundColor: selectedTheme }}
                   >
                     <img
@@ -104,13 +104,13 @@ qualidade de seus posts!"
                     />
                     <div className="flex flex-col h-full justify-center">
                       <h3
-                        className={`${isLightMode && "text-black"}`}
+                        className={`${isLightMode && "text-black"} leading-tight`}
                         style={{ fontFamily: selectedFont }}
                       >
                         Gabriel Torres
                       </h3>
                       <p
-                        className={`${isLightMode && "text-black"}`}
+                        className={`${isLightMode && "text-black"} leading-tight`}
                         style={{ fontFamily: selectedFont }}
                       >
                         @gabriel_torresr
