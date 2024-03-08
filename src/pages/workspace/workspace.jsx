@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Toastify } from "../../components/Toastify/Toastify";
 import MainHeader from "../../components/Header/MainHeader";
-import MainSelect from "../../components/Selects/MainSelect";
 import AddNewButton from "../../components/Buttons/AddNewButton";
 import FooterSection from "../../components/Footer/FooterSection";
 import { Link } from "react-router-dom";
 import { HiMiniCheck } from "react-icons/hi2";
 import UniqueModelInput from "../../components/Inputs/UniqueModelInput";
-import GeneralInput from "../../components/Inputs/GeneralInput";
+import PostInfos from "../../components/Workspace/PostInfos/PostInfos";
+import MainSelect from "../../components/Selects/MainSelect";
+import GeneralTextArea from "../../components/Inputs/GeneralTextArea";
+import ImageUploadInput from "../../components/Inputs/ImageUploadInput";
+import { HiMiniXMark } from "react-icons/hi2";
 
 export default function WorkspacePage() {
   const themeOptions = [
@@ -37,9 +40,30 @@ export default function WorkspacePage() {
   const fontSizes_username = Array.from({ length: 6 }, (_, i) => i * 2 + 12);
   const fontSizes_text = Array.from({ length: 6 }, (_, i) => i * 2 + 18);
   const fontSizes_title = Array.from({ length: 6 }, (_, i) => i * 2 + 24);
+  const tweetsType = [
+    { label: "Título", value: "just-title" },
+    { label: "Tema e Conteúdo", value: "theme-and-content" },
+    { label: "Conteúdo e Imagem", value: "content-and-image" },
+  ];
 
   const [availableModels, setAvailableModels] = useState([]);
   const [postInfos, setPostInfos] = useState({
+    pagesQuantity: 1,
+    pagesContent: [
+      {
+        id: 0,
+        type: tweetsType[0].value,
+        title: "",
+        theme: "",
+        content: "",
+        images: [
+          // {
+          //   id: 0,
+          //   base64Content: "",
+          // }
+        ],
+      },
+    ],
     user_name: "",
     user_username: "",
     user_photo: "",
@@ -126,6 +150,66 @@ export default function WorkspacePage() {
     setPostInfos((prevInfos) => ({ ...prevInfos, [name]: value }));
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) {
+      return;
+    }
+    let reader = new FileReader();
+    reader.onloadend = () => {
+      setPostInfos({
+        ...postInfos,
+        user_photo: reader.result,
+      });
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handlePostImagesChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) {
+      return;
+    }
+    let reader = new FileReader();
+    reader.onloadend = () => {
+      setPostInfos((prevInfos) => ({
+        ...prevInfos,
+        pagesContent: prevInfos.pagesContent.map((page) =>
+          page.id === 0
+            ? {
+                ...page,
+                images: [
+                  ...page.images,
+                  {
+                    id: page.images.length,
+                    base64Content: reader.result,
+                  },
+                ],
+              }
+            : page
+        ),
+      }));
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  const handleRemovePostImage = (imageIdToRemove) => {
+    setPostInfos((prevInfos) => ({
+      ...prevInfos,
+      pagesContent: prevInfos.pagesContent.map((page, pageIndex) => {
+        if (page.id === 0) {
+          return {
+            ...page,
+            images: page.images.filter((image) => image.id !== imageIdToRemove),
+          };
+        }
+        return page;
+      }),
+    }));
+  };
+
+
   return (
     <main className="min-h-screen max-w-screen overflow-x-hidden bg-[#212121]">
       <MainHeader
@@ -194,7 +278,11 @@ export default function WorkspacePage() {
                           name={theme.alias}
                           key={theme.alias}
                           onClick={() => handleChangeThemeActive(theme.alias)}
-                          className="w-12 h-12 rounded-full overflow-hidden hidden-1-shadow"
+                          className={`w-12 h-12 rounded-full overflow-hidden transition-all duration-300 ease-in-out ${
+                            postInfos.general_theme.alias === theme.alias
+                              ? "hidden-1-shadow-selected"
+                              : "hidden-1-shadow"
+                          }`}
                           style={{ backgroundColor: theme.secondaryColor }}
                         >
                           <div
@@ -210,97 +298,148 @@ export default function WorkspacePage() {
             {/* Second Section */}
             <section className="flex flex-col w-full p-12 gap-y-10 bg-[#1E1E1E] rounded-[3rem] hidden-1-shadow">
               {/* Set Infos Form */}
-              <div className="grid grid-cols-2 gap-x-10">
-                <div className="flex flex-col gap-y-4">
-                  <h2>Informações do Perfil</h2>
-                  <div className="grid grid-cols-2 gap-x-5">
-                    <GeneralInput
-                      label="Nome do Usuário"
-                      type="text"
-                      name="user_name"
-                      value={postInfos.user_name}
-                      onChange={handleChangePostInfos}
-                      placeholder="User Name"
-                    />
-                    <GeneralInput
-                      label="Foto de perfil do Usuário"
-                      type="text"
-                      name="user_photo"
-                      value={postInfos.user_photo}
-                      onChange={handleChangePostInfos}
-                      placeholder="User Name"
-                    />
-                  </div>
-                  <div className="grid grid-cols-2 gap-x-5">
-                    <GeneralInput
-                      label="Username"
-                      type="text"
-                      name="user_username"
-                      value={postInfos.user_username}
-                      onChange={handleChangePostInfos}
-                      placeholder="@username_"
-                    />
-                    <div className="w-full" />
-                  </div>
-                </div>
-                <div className="flex flex-col gap-y-4">
-                  <h2>Informações Gerais</h2>
-                  <div className="grid grid-cols-2 gap-x-5">
-                    <div className="w-full flex flex-col gap-y-1">
-                      <p>Fonte:</p>
-                      <MainSelect
-                        options={fontNames.map((font) => ({
-                          value: font,
-                          label: font,
-                        }))}
-                        value={postInfos.general_fontType}
-                        onChange={handleFontChange}
-                      />
-                    </div>
-                    <div className="w-full flex flex-col gap-y-1">
-                      <p>Tamanho da fonte: (Título)</p>
-                      <MainSelect
-                        options={fontSizes_title.map((font) => ({
-                          value: font,
-                          label: font,
-                        }))}
-                        value={postInfos.general_title_fontSize}
-                        onChange={handleTitleFontSizeChange}
-                      />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-x-5">
-                    <div className="w-full flex flex-col gap-y-1">
-                      <p>Tamanho da fonte: (Username)</p>
-                      <MainSelect
-                        options={fontSizes_username.map((font) => ({
-                          value: font,
-                          label: font,
-                        }))}
-                        value={postInfos.general_username_fontSize}
-                        onChange={handleUsernameFontSizeChange}
-                      />
-                    </div>
-                    <div className="w-full flex flex-col gap-y-1">
-                      <p>Tamanho da fonte: (Texto)</p>
-                      <MainSelect
-                        options={fontSizes_text.map((font) => ({
-                          value: font,
-                          label: font,
-                        }))}
-                        value={postInfos.general_text_fontSize}
-                        onChange={handleTextFontSizeChange}
-                      />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-x-5"></div>
-                </div>
-              </div>
+              <PostInfos
+                postInfos={postInfos}
+                handleChangePostInfos={handleChangePostInfos}
+                handleFontChange={handleFontChange}
+                handleTitleFontSizeChange={handleTitleFontSizeChange}
+                handleTextFontSizeChange={handleTextFontSizeChange}
+                handleUsernameFontSizeChange={handleUsernameFontSizeChange}
+                handleImageChange={handleImageChange}
+                fontNames={fontNames}
+                fontSizes_title={fontSizes_title}
+                fontSizes_username={fontSizes_username}
+                fontSizes_text={fontSizes_text}
+              />
 
-              <div className="w-full h-1/2 bg-[#303030]" />
+              <div className="w-full h-[2px] bg-[#303030]" />
 
               {/* List Pages */}
-              <div className="flex flex-col gap-y-5"></div>
+              <div className="flex flex-col gap-y-5">
+                {postInfos.pagesContent.map((page, index) => (
+                  <div key={index} className="flex flex-col gap-y-10">
+                    <div className="grid grid-cols-[2fr_1.5fr] gap-x-5">
+                      <div className="w-full flex flex-col gap-y-5">
+                        <div className="w-full flex flex-col gap-y-1">
+                          <p>Tipo de tweet</p>
+                          <MainSelect
+                            className="max-w-[234px]"
+                            options={tweetsType.map((type) => ({
+                              value: type.value,
+                              label: type.label,
+                            }))}
+                            value={page.type}
+                            onChange={(e) => {
+                              const { value } = e;
+                              setPostInfos((prevInfos) => ({
+                                ...prevInfos,
+                                pagesContent: prevInfos.pagesContent.map(
+                                  (page, index) =>
+                                    index === index
+                                      ? { ...page, type: value }
+                                      : page
+                                ),
+                              }));
+                            }}
+                          />
+                        </div>
+                        {page.type === "just-title" && (
+                          <GeneralTextArea
+                            label="Conteúdo do título"
+                            name="title"
+                            value={page.title}
+                            onChange={(e) => {
+                              const { value } = e.target;
+                              setPostInfos((prevInfos) => ({
+                                ...prevInfos,
+                                pagesContent: prevInfos.pagesContent.map(
+                                  (page, pageIndex) =>
+                                    pageIndex === index
+                                      ? { ...page, title: value }
+                                      : page
+                                ),
+                              }));
+                            }}
+                            placeholder="Adicione o conteúdo do título"
+                          />
+                        )}
+                        {page.type === "theme-and-content" && (
+                          <GeneralTextArea
+                            label="Conteúdo do tema (opcional)"
+                            name="theme"
+                            value={page.theme}
+                            onChange={(e) => {
+                              const { value } = e.target;
+                              setPostInfos((prevInfos) => ({
+                                ...prevInfos,
+                                pagesContent: prevInfos.pagesContent.map(
+                                  (page, pageIndex) =>
+                                    pageIndex === index
+                                      ? { ...page, theme: value }
+                                      : page
+                                ),
+                              }));
+                            }}
+                            placeholder="Adicione o conteúdo do tema"
+                          />
+                        )}
+                        {(page.type === "theme-and-content" ||
+                          page.type === "content-and-image") && (
+                          <GeneralTextArea
+                            label="Conteúdo"
+                            name="content"
+                            value={page.content}
+                            onChange={(e) => {
+                              const { value } = e.target;
+                              setPostInfos((prevInfos) => ({
+                                ...prevInfos,
+                                pagesContent: prevInfos.pagesContent.map(
+                                  (page, pageIndex) =>
+                                    pageIndex === index
+                                      ? { ...page, content: value }
+                                      : page
+                                ),
+                              }));
+                            }}
+                            placeholder="Adicione o conteúdo do tweet"
+                          />
+                        )}
+                        {page.type === "content-and-image" && (
+                          <>
+                            <ImageUploadInput
+                              label="Adicione as imagens (máx. 4)"
+                              onChange={handlePostImagesChange}
+                              name={`post-images-${index}`}
+                            />
+                            {page.images.length > 0 && (
+                              <div className="flex gap-x-5">
+                                {page.images.map((image) => (
+                                  <div className="relative" key={image.id}>
+                                    <img
+                                      className="hidden-1-shadow w-[12rem] h-[9rem] object-cover bg-[#212121] rounded-2xl brightness-75"
+                                      src={image.base64Content}
+                                      alt="Uploaded content"
+                                    />
+                                    <button
+                                      className="absolute top-0 right-0 p-1 mt-2 mr-2 rounded-full bg-[#30303091] text-[#ffffff] hover:text-[#ffbdbd] transition-all duration-300 ease-in-out"
+                                      onClick={() =>
+                                        handleRemovePostImage(image.id)
+                                      }
+                                    >
+                                      <HiMiniXMark className="text-lg" />
+                                    </button>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </>
+                        )}
+                      </div>
+                    </div>
+                    <div className="w-full h-[2px] bg-[#303030]" />
+                  </div>
+                ))}
+              </div>
             </section>
           </section>
         </main>
