@@ -2,6 +2,7 @@ import React from "react";
 
 export default function ImageUploadInput({
   label,
+  disabled,
   name,
   onChange,
   imagePreviewUrl,
@@ -16,13 +17,14 @@ export default function ImageUploadInput({
       )}
       <label
         htmlFor={name}
-        className={`hidden-1-shadow flex items-center justify-start bg-[#212121] rounded-2xl gap-x-4 cursor-pointer min-w-[242px] ${
+        className={`hidden-1-shadow flex items-center justify-start bg-[#212121] rounded-2xl gap-x-4 min-w-[242px] ${
           displayPreview && "rounded-r-3xl"
-        }`}
+        } ${disabled ? "cursor-default" : "cursor-pointer"}`}
       >
         <div className="flex items-center justify-center bg-[#303030] w-[41px] h-[41px] rounded-2xl">
           <span className="text-white text-xl font-semibold">+</span>
           <input
+            disabled={disabled ? true : false}
             id={name}
             type="file"
             name={name}
@@ -35,6 +37,8 @@ export default function ImageUploadInput({
           <p className="relative font-normal text-[1rem] text-white">
             {imagePreviewUrl && displayPreview
               ? "Foto carregada!"
+              : disabled
+              ? "Limite atingido."
               : "Envie uma foto"}
           </p>
         </div>

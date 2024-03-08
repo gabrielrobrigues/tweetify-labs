@@ -11,6 +11,7 @@ import MainSelect from "../../components/Selects/MainSelect";
 import GeneralTextArea from "../../components/Inputs/GeneralTextArea";
 import ImageUploadInput from "../../components/Inputs/ImageUploadInput";
 import { HiMiniXMark } from "react-icons/hi2";
+import PageList from "../../components/Workspace/Pages/PageList";
 
 export default function WorkspacePage() {
   const themeOptions = [
@@ -209,6 +210,33 @@ export default function WorkspacePage() {
     }));
   };
 
+  const handleAddNewPage = () => {
+    setPostInfos((prevInfos) => ({
+      ...prevInfos,
+      pagesQuantity: prevInfos.pagesQuantity + 1,
+      pagesContent: [
+        ...prevInfos.pagesContent,
+        {
+          id: prevInfos.pagesContent.length,
+          type: tweetsType[0].value,
+          title: "",
+          theme: "",
+          content: "",
+          images: [],
+        },
+      ],
+    }));
+  };
+
+  const handleRemovePage = (pageIdToRemove) => {
+    setPostInfos((prevInfos) => ({
+      ...prevInfos,
+      pagesQuantity: prevInfos.pagesQuantity - 1,
+      pagesContent: prevInfos.pagesContent.filter(
+        (page) => page.id !== pageIdToRemove
+      ),
+    }));
+  }
 
   return (
     <main className="min-h-screen max-w-screen overflow-x-hidden bg-[#212121]">
@@ -315,130 +343,31 @@ export default function WorkspacePage() {
               <div className="w-full h-[2px] bg-[#303030]" />
 
               {/* List Pages */}
-              <div className="flex flex-col gap-y-5">
-                {postInfos.pagesContent.map((page, index) => (
-                  <div key={index} className="flex flex-col gap-y-10">
-                    <div className="grid grid-cols-[2fr_1.5fr] gap-x-5">
-                      <div className="w-full flex flex-col gap-y-5">
-                        <div className="w-full flex flex-col gap-y-1">
-                          <p>Tipo de tweet</p>
-                          <MainSelect
-                            className="max-w-[234px]"
-                            options={tweetsType.map((type) => ({
-                              value: type.value,
-                              label: type.label,
-                            }))}
-                            value={page.type}
-                            onChange={(e) => {
-                              const { value } = e;
-                              setPostInfos((prevInfos) => ({
-                                ...prevInfos,
-                                pagesContent: prevInfos.pagesContent.map(
-                                  (page, index) =>
-                                    index === index
-                                      ? { ...page, type: value }
-                                      : page
-                                ),
-                              }));
-                            }}
-                          />
-                        </div>
-                        {page.type === "just-title" && (
-                          <GeneralTextArea
-                            label="Conteúdo do título"
-                            name="title"
-                            value={page.title}
-                            onChange={(e) => {
-                              const { value } = e.target;
-                              setPostInfos((prevInfos) => ({
-                                ...prevInfos,
-                                pagesContent: prevInfos.pagesContent.map(
-                                  (page, pageIndex) =>
-                                    pageIndex === index
-                                      ? { ...page, title: value }
-                                      : page
-                                ),
-                              }));
-                            }}
-                            placeholder="Adicione o conteúdo do título"
-                          />
-                        )}
-                        {page.type === "theme-and-content" && (
-                          <GeneralTextArea
-                            label="Conteúdo do tema (opcional)"
-                            name="theme"
-                            value={page.theme}
-                            onChange={(e) => {
-                              const { value } = e.target;
-                              setPostInfos((prevInfos) => ({
-                                ...prevInfos,
-                                pagesContent: prevInfos.pagesContent.map(
-                                  (page, pageIndex) =>
-                                    pageIndex === index
-                                      ? { ...page, theme: value }
-                                      : page
-                                ),
-                              }));
-                            }}
-                            placeholder="Adicione o conteúdo do tema"
-                          />
-                        )}
-                        {(page.type === "theme-and-content" ||
-                          page.type === "content-and-image") && (
-                          <GeneralTextArea
-                            label="Conteúdo"
-                            name="content"
-                            value={page.content}
-                            onChange={(e) => {
-                              const { value } = e.target;
-                              setPostInfos((prevInfos) => ({
-                                ...prevInfos,
-                                pagesContent: prevInfos.pagesContent.map(
-                                  (page, pageIndex) =>
-                                    pageIndex === index
-                                      ? { ...page, content: value }
-                                      : page
-                                ),
-                              }));
-                            }}
-                            placeholder="Adicione o conteúdo do tweet"
-                          />
-                        )}
-                        {page.type === "content-and-image" && (
-                          <>
-                            <ImageUploadInput
-                              label="Adicione as imagens (máx. 4)"
-                              onChange={handlePostImagesChange}
-                              name={`post-images-${index}`}
-                            />
-                            {page.images.length > 0 && (
-                              <div className="flex gap-x-5">
-                                {page.images.map((image) => (
-                                  <div className="relative" key={image.id}>
-                                    <img
-                                      className="hidden-1-shadow w-[12rem] h-[9rem] object-cover bg-[#212121] rounded-2xl brightness-75"
-                                      src={image.base64Content}
-                                      alt="Uploaded content"
-                                    />
-                                    <button
-                                      className="absolute top-0 right-0 p-1 mt-2 mr-2 rounded-full bg-[#30303091] text-[#ffffff] hover:text-[#ffbdbd] transition-all duration-300 ease-in-out"
-                                      onClick={() =>
-                                        handleRemovePostImage(image.id)
-                                      }
-                                    >
-                                      <HiMiniXMark className="text-lg" />
-                                    </button>
-                                  </div>
-                                ))}
-                              </div>
-                            )}
-                          </>
-                        )}
-                      </div>
-                    </div>
-                    <div className="w-full h-[2px] bg-[#303030]" />
-                  </div>
-                ))}
+              <PageList
+                pagesContent={postInfos.pagesContent}
+                tweetsType={tweetsType}
+                setPostInfos={setPostInfos}
+                handlePostImagesChange={handlePostImagesChange}
+                handleRemovePostImage={handleRemovePostImage}
+              />
+              <div className="flex justify-center items-center w-full gap-x-10">
+                {postInfos.pagesContent.length > 1 && (
+                  <AddNewButton
+                    onClick={() =>
+                      handleRemovePage(
+                        postInfos.pagesContent[
+                          postInfos.pagesContent.length - 1
+                        ].id
+                      )
+                    }
+                    text="Apagar última página"
+                    lessButton
+                  />
+                )}
+                <AddNewButton
+                  onClick={handleAddNewPage}
+                  text="Criar nova página"
+                />
               </div>
             </section>
           </section>
